@@ -20,17 +20,20 @@ public class WallMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-        transform.position = transform.position - (horizontal * Time.deltaTime);
+        if (GlobalVars.isDead == false) {
 
-        if (transform.position.x < -3.2f)
-        {
-            Destroy(this.gameObject);
-        }
+            transform.position = transform.position - (horizontal * Time.deltaTime);
 
-        if (!hasScored && transform.position.x < -1.5f)
-        {
-            GlobalVars.localScore++;
+            if (transform.position.x < -3.2f)
+            {
+                Destroy(this.gameObject);
+            }
+
+            if (!hasScored && transform.position.x < -1.5f)
+            {
+                GlobalVars.localScore++;
+                hasScored = true;
+            }
         }
 
     }

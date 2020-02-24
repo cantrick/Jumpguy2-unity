@@ -16,26 +16,29 @@ public class CharController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //change jump height based on how many jumps you've used
-        switch (jumps)
+        if (GlobalVars.isDead == false)
         {
-            case 0:
-                jumpSpeed = 50;
-                break;
-            case 1:
-                jumpSpeed = 40;
-                break;
-            case 2:
-                jumpSpeed = 30;
-                break;
-        }
-        //zero out velocity so jumps aren't dampened by gravity
-        //add force to jump!
-        if (Input.GetMouseButtonDown(0) && jumps < 3)
-        {
-            GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-            GetComponent<Rigidbody2D>().AddForce(new Vector2(0, jumpSpeed));
-            jumps += 1;
+            //change jump height based on how many jumps you've used
+            switch (jumps)
+            {
+                case 0:
+                    jumpSpeed = 50;
+                    break;
+                case 1:
+                    jumpSpeed = 40;
+                    break;
+                case 2:
+                    jumpSpeed = 30;
+                    break;
+            }
+            //zero out velocity so jumps aren't dampened by gravity
+            //add force to jump!
+            if (Input.GetMouseButtonDown(0) && jumps < 3)
+            {
+                GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+                GetComponent<Rigidbody2D>().AddForce(new Vector2(0, jumpSpeed));
+                jumps += 1;
+            }
         }
 
     }
@@ -45,6 +48,12 @@ public class CharController : MonoBehaviour
         if (collision.gameObject.tag == "Scenery" || collision.gameObject.tag == "Wall")
         {
             jumps = 0;
+        }
+
+        //add fail state if you crash into side of the wall
+        if (collision.gameObject.tag == "Wall")
+        {
+            collision.gameObject.GetComponent<MeshRenderer>().bounds
         }
     }
 }

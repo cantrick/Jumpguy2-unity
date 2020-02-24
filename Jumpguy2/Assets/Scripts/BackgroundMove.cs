@@ -21,17 +21,20 @@ public class BackgroundMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position = transform.position - (horizontal * Time.deltaTime);
+        if (GlobalVars.isDead == false)
+        {
+            transform.position = transform.position - (horizontal * Time.deltaTime);
 
-        //spawn background
-        if ((transform.position.x < -2.3f) && bgSpawn == true)
-        {
-            Instantiate(bgPrefab, new Vector3(7.90f, 0, 2), Quaternion.identity);
-            bgSpawn = false;
-        }
-        else if (transform.position.x < -7.93f)
-        {
-            Destroy(this.gameObject);
+            //spawn background
+            if ((transform.position.x < -2.3f) && bgSpawn == true)
+            {
+                Instantiate(bgPrefab, new Vector3(7.90f, 0, 2), Quaternion.identity);
+                bgSpawn = false;
+            }
+            else if (transform.position.x < -7.93f)
+            {
+                Destroy(this.gameObject);
+            }
         }
     }
 }

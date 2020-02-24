@@ -1,11 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameLoop : MonoBehaviour
 {
     public GameObject jumpGuy;
     public GameObject wallPrefab;
+    public Text Sky;
 
 
     float spawnChance = 0.0f;
@@ -19,14 +21,16 @@ public class GameLoop : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        spawnChance = Random.Range(0, 700);
-        //spawn wall
-        if (spawnChance > 0 && spawnChance < 8)
+        if (GlobalVars.isDead == false)
         {
-            Instantiate(wallPrefab, new Vector3(3.2f, Random.Range(-2.3f, -1.1f), 0), Quaternion.identity);
+            spawnChance = Random.Range(0, 700);
+            //spawn wall
+            if (spawnChance > 0 && spawnChance < 8)
+            {
+                Instantiate(wallPrefab, new Vector3(3.2f, Random.Range(-2.3f, -1.1f), 0), Quaternion.identity);
+            }
         }
 
-
-
+            Sky.text = "Score: " + GlobalVars.localScore;
     }
 }
