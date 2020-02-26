@@ -53,7 +53,17 @@ public class CharController : MonoBehaviour
         //add fail state if you crash into side of the wall
         if (collision.gameObject.tag == "Wall")
         {
-            collision.gameObject.GetComponent<MeshRenderer>().bounds
+            if((collision.gameObject.transform.position.y + (collision.gameObject.GetComponent<Collider2D>().bounds.size.y / 2)) > transform.position.y )
+            {
+                /*
+                Debug.Log("ColliderPOS is: " + collision.gameObject.transform.position.y);
+                Debug.Log("Collider TOP is: " + (collision.gameObject.transform.position.y + (collision.gameObject.GetComponent<Collider2D>().bounds.size.y/2)));
+                Debug.Log("Collider is: " + collision.gameObject.GetComponent<Collider2D>().bounds.size.y);
+                Debug.Log("Player is: " + transform.position.y);
+                */
+                GlobalVars.isDead = true;
+            }
+
         }
     }
 }
