@@ -63,7 +63,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\BackgroundMove.cs" />
+    <Compile Include="Assets\Scripts\CamController.cs" />
     <Compile Include="Assets\Scripts\CharController.cs" />
+    <Compile Include="Assets\Scripts\DebugButtonScript.cs" />
     <Compile Include="Assets\Scripts\ForegroundMove.cs" />
     <Compile Include="Assets\Scripts\GameLoop.cs" />
     <Compile Include="Assets\Scripts\GlobalVars.cs" />
