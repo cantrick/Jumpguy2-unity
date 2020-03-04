@@ -18,6 +18,7 @@ public class CharController : MonoBehaviour
     {
         if (GlobalVars.isDead == false)
         {
+            GetComponent<Rigidbody2D>().gravityScale = 5;
             //change jump height based on how many jumps you've used
             switch (jumps)
             {
@@ -39,6 +40,9 @@ public class CharController : MonoBehaviour
                 GetComponent<Rigidbody2D>().AddForce(new Vector2(0, jumpSpeed));
                 jumps += 1;
             }
+        } else
+        {
+            GetComponent<Rigidbody2D>().gravityScale = 0;
         }
 
     }

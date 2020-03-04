@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Scenery
   - Wall
+  - Jumpguy
   layers:
   - Default
   - TransparentFX

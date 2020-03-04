@@ -20,7 +20,7 @@ public class WallMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (GlobalVars.isDead == false && GlobalVars.camState == 1) {
+        if (GlobalVars.isDead == false && GlobalVars.gameState == 1) {
 
             transform.position = transform.position - (horizontal * Time.deltaTime);
 

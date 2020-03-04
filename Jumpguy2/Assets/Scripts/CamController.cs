@@ -13,7 +13,7 @@ public class CamController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (GlobalVars.camState == 0)
+        if (GlobalVars.gameState == 0)
         {
             transform.position = new Vector3(-30,0,-10);
         } else
