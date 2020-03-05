@@ -20,11 +20,15 @@ public class GameLoop : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //make buttons inactive until we need them
         btnRetry = GameObject.Find("btnRetry");
         btnExit = GameObject.Find("btnExit");
 
         btnExit.SetActive(false);
         btnRetry.SetActive(false);
+
+        //get highscore from file
+        GlobalVars.highScore = PlayerPrefs.GetInt("highscore");
     }
 
     // Update is called once per frame
@@ -193,6 +197,7 @@ public class GameLoop : MonoBehaviour
                     if (GlobalVars.localScore > GlobalVars.highScore)
                     {
                         GlobalVars.highScore = GlobalVars.localScore;
+                        PlayerPrefs.SetInt("highscore",GlobalVars.highScore);
                         GlobalVars.localScore = 0;
                     }
                     else
@@ -220,6 +225,7 @@ public class GameLoop : MonoBehaviour
                     if (GlobalVars.localScore > GlobalVars.highScore)
                     {
                         GlobalVars.highScore = GlobalVars.localScore;
+                        PlayerPrefs.SetInt("highscore", GlobalVars.highScore);
                         GlobalVars.localScore = 0;
                     }
                     else
