@@ -18,6 +18,7 @@ public class CharController : MonoBehaviour
     {
         if (GlobalVars.isDead == false)
         {
+            GetComponent<Rigidbody2D>().gravityScale = 5;
             //change jump height based on how many jumps you've used
             switch (jumps)
             {
@@ -39,6 +40,9 @@ public class CharController : MonoBehaviour
                 GetComponent<Rigidbody2D>().AddForce(new Vector2(0, jumpSpeed));
                 jumps += 1;
             }
+        } else
+        {
+            GetComponent<Rigidbody2D>().gravityScale = 0;
         }
 
     }
@@ -53,7 +57,17 @@ public class CharController : MonoBehaviour
         //add fail state if you crash into side of the wall
         if (collision.gameObject.tag == "Wall")
         {
-            collision.gameObject.GetComponent<MeshRenderer>().bounds
+            if((collision.gameObject.transform.position.y + (collision.gameObject.GetComponent<Collider2D>().bounds.size.y / 2)) > transform.position.y )
+            {
+                /*
+                Debug.Log("ColliderPOS is: " + collision.gameObject.transform.position.y);
+                Debug.Log("Collider TOP is: " + (collision.gameObject.transform.position.y + (collision.gameObject.GetComponent<Collider2D>().bounds.size.y/2)));
+                Debug.Log("Collider is: " + collision.gameObject.GetComponent<Collider2D>().bounds.size.y);
+                Debug.Log("Player is: " + transform.position.y);
+                */
+                GlobalVars.isDead = true;
+            }
+
         }
     }
 }
