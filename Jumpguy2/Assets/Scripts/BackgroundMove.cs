@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BackgroundMove : MonoBehaviour
 {
-    public int speed = 1;
+    public float speed = 1.0f;
     public Vector3 horizontal;
     public GameObject bgPrefab;
 
@@ -23,6 +23,7 @@ public class BackgroundMove : MonoBehaviour
     {
         if (GlobalVars.isDead == false && GlobalVars.gameState == 1)
         {
+            horizontal = new Vector3(speed + (float)(GlobalVars.localScore / 12.0f), 0, 0);
             transform.position = transform.position - (horizontal * Time.deltaTime);
 
             //spawn background
