@@ -39,7 +39,7 @@ public class GameLoop : MonoBehaviour
         // After play button is clicked, spawn the initial parts (jumpguy and the first wall)
         if (GlobalVars.gameState == 1 && startGame == false)
         {
-            jgClone = Instantiate(jumpGuy, new Vector3(-1.5f, -1.5f, -1), Quaternion.identity);
+            jgClone = Instantiate(jumpGuy, new Vector3(-1.5f, -1.5f, -1.2f), Quaternion.identity);
             Instantiate(wallPrefab, new Vector3(3.2f, Random.Range(-2.3f, -1.1f), 0), Quaternion.identity);
             startGame = true;
         }
@@ -51,7 +51,7 @@ public class GameLoop : MonoBehaviour
         {
             spawnChance = Random.Range(0, 700);
             //spawn wall
-            if (spawnChance > 0 && spawnChance < 8)
+            if (spawnChance > 0 && spawnChance < 10)
             {
                 Instantiate(wallPrefab, new Vector3(3.2f, Random.Range(-2.3f, -1.1f), 0), Quaternion.identity);
             }

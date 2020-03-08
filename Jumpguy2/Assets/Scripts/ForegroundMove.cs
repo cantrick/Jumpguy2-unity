@@ -30,7 +30,7 @@ public class ForegroundMove : MonoBehaviour
             //spawn background
             if ((transform.position.x < -2.3f) && fgSpawn == true)
             {
-                Instantiate(fgPrefab, new Vector3(7.90f, -0.3f, 0), Quaternion.identity);
+                Instantiate(fgPrefab, new Vector3(7.90f, -0.3f, -1.0f), Quaternion.identity);
                 fgSpawn = false;
             }
             else if (transform.position.x < -7.93f)
