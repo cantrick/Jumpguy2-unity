@@ -24,11 +24,10 @@ public class ForegroundMove : MonoBehaviour
         if (GlobalVars.isDead == false && GlobalVars.gameState == 1)
         {
             horizontal = new Vector3(speed + (float)(GlobalVars.localScore / 12.0f), 0, 0);
-            Debug.Log(horizontal);
             transform.position = transform.position - (horizontal * Time.deltaTime);
 
             //spawn background
-            if ((transform.position.x < -2.3f) && fgSpawn == true)
+            if ((transform.position.x < -2.2f) && fgSpawn == true)
             {
                 Instantiate(fgPrefab, new Vector3(7.90f, -0.3f, -1.0f), Quaternion.identity);
                 fgSpawn = false;

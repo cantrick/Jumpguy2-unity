@@ -34,7 +34,8 @@ public class GameLoop : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        debugButtonFunction();
+        //debugButtonFunction();
+        menuHandler();
 
         // After play button is clicked, spawn the initial parts (jumpguy and the first wall)
         if (GlobalVars.gameState == 1 && startGame == false)
@@ -44,7 +45,6 @@ public class GameLoop : MonoBehaviour
             startGame = true;
         }
 
-        menuHandler();
 
         //if we're alive, spawn walls and move things
         if (GlobalVars.isDead == false && GlobalVars.gameState == 1)
@@ -135,27 +135,57 @@ public class GameLoop : MonoBehaviour
                     GameObject touchedObject = hitInformation.transform.gameObject;
                     if (touchedObject.name == "btnRetry")
                     {
+                        Debug.Log("retry touch");
                         //Delete walls, move background/foreground/jumpguy back to initial positions
                         foreach (GameObject o in GameObject.FindGameObjectsWithTag("Wall"))
                         {
                             Destroy(o);
                         }
-                        //jumpGuy.transform.position = new Vector3(-1.5f, -1.5f, -1);
+                        Destroy(jgClone);
+                        startGame = false;
                         btnExit.SetActive(false);
                         btnRetry.SetActive(false);
-                        GlobalVars.gameState = 0;
+
+                        //do score logic:
+                        if (GlobalVars.localScore > GlobalVars.highScore)
+                        {
+                            GlobalVars.highScore = GlobalVars.localScore;
+                            PlayerPrefs.SetInt("highscore", GlobalVars.highScore);
+                            GlobalVars.localScore = 0;
+                        }
+                        else
+                        {
+                            GlobalVars.localScore = 0;
+                        }
+
+                        GlobalVars.gameState = 1;
                         GlobalVars.isDead = false;
                     }
                     else if (touchedObject.name == "btnExit")
                     {
+                        Debug.Log("exit touch");
                         //Delete walls, move background/foreground/jumpguy back to initial positions
                         foreach (GameObject o in GameObject.FindGameObjectsWithTag("Wall"))
                         {
                             Destroy(o);
                         }
-                        //jumpGuy.transform.position = new Vector3(-1.5f, -1.5f, -1);
+                        Destroy(jgClone);
+                        startGame = false;
                         btnExit.SetActive(false);
                         btnRetry.SetActive(false);
+
+                        //do score logic:
+                        if (GlobalVars.localScore > GlobalVars.highScore)
+                        {
+                            GlobalVars.highScore = GlobalVars.localScore;
+                            PlayerPrefs.SetInt("highscore", GlobalVars.highScore);
+                            GlobalVars.localScore = 0;
+                        }
+                        else
+                        {
+                            GlobalVars.localScore = 0;
+                        }
+
                         GlobalVars.gameState = 0;
                         GlobalVars.isDead = false;
                     }

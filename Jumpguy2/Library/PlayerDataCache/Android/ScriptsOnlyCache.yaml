@@ -48,27 +48,27 @@ ScriptsOnlyBuild:
     - Class: 104
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 11150}
+      Script: {instanceID: 11152}
     - Class: 114
-      Script: {instanceID: 11320}
+      Script: {instanceID: 11322}
     - Class: 114
-      Script: {instanceID: 11774}
+      Script: {instanceID: 11776}
     - Class: 114
-      Script: {instanceID: 12016}
+      Script: {instanceID: 12018}
     - Class: 114
-      Script: {instanceID: 12076}
+      Script: {instanceID: 12078}
     - Class: 114
-      Script: {instanceID: 12086}
+      Script: {instanceID: 12088}
     - Class: 114
-      Script: {instanceID: 12102}
+      Script: {instanceID: 12104}
     - Class: 114
-      Script: {instanceID: 12700}
+      Script: {instanceID: 12702}
     - Class: 114
-      Script: {instanceID: 12818}
+      Script: {instanceID: 12820}
     - Class: 114
-      Script: {instanceID: 12974}
+      Script: {instanceID: 12976}
     - Class: 114
-      Script: {instanceID: 13088}
+      Script: {instanceID: 13090}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -559,4 +559,4 @@ ScriptsOnlyBuild:
   platform: 13
   scenePathNames:
   - Assets/Scenes/SampleScene.unity
-  playerPath: D:/Documents/Git/Jumpguy2-unity/Jumpguy2-unity/Jumpguy2/Android Builds/jg2-preAlpha-fixed-maybe-2.apk
+  playerPath: D:/Documents/Git/Jumpguy2-unity/Jumpguy2-unity/Jumpguy2/Android Builds/jg2-gpalpha-0.1.aab
