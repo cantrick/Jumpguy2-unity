@@ -10,32 +10,86 @@ public class GameLoop : MonoBehaviour
     public Text Sky;
     public Text SkyHigh;
 
+
     Vector3 touchPosWorld;
     bool startGame = false;
     GameObject btnRetry;
     GameObject btnExit;
+    GameObject btnPlay;
+    GameObject btnScores;
     GameObject jgClone;
+    GameObject ipf;
+    GameObject scoreCanvas;
+    GameObject spawnPoint;
+    //private string deviceid;
 
     float spawnChance = 0.0f;
+    float last1 = 0;
+    float last2 = 0;
+    bool gotHSfromDB = false;
+
     // Start is called before the first frame update
     void Start()
     {
         //make buttons inactive until we need them
         btnRetry = GameObject.Find("btnRetry");
         btnExit = GameObject.Find("btnExit");
+        btnPlay = GameObject.Find("btnPlay");
+        btnScores = GameObject.Find("btnScores");
+        ipf = GameObject.Find("InputField");
+        scoreCanvas = GameObject.Find("ScoreCanvas");
+        spawnPoint = GameObject.Find("SpawnPoint"); 
 
         btnExit.SetActive(false);
         btnRetry.SetActive(false);
+        scoreCanvas.SetActive(false);
+
 
         //get highscore from file
+        //PlayerPrefs.SetInt("highscore", 0);
         GlobalVars.highScore = PlayerPrefs.GetInt("highscore");
+        Debug.Log(SystemInfo.deviceUniqueIdentifier + " --- " + PlayerPrefs.GetString("userName"));
+        if (CheckInternet.isOnline == true)
+        {
+            if(!PlayerPrefs.HasKey("userId"))
+            {
+                //get the username only if there is one
+                GetComponent<addUserScript>().CallGetUser(SystemInfo.deviceUniqueIdentifier);
+                ipf.SetActive(true);
+            }
+            else
+            {
+                btnPlay.SetActive(false);
+                btnScores.SetActive(false);
+            }
+        }
+
+        if (PlayerPrefs.HasKey("userName"))
+        {
+            ipf.SetActive(false);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        //debugButtonFunction();
-        menuHandler();
+
+        if (PlayerPrefs.HasKey("userName"))
+        {
+            ipf.SetActive(false);
+            btnPlay.SetActive(true);
+            btnScores.SetActive(true);
+        }
+        else
+        {
+            ipf.SetActive(true);
+            btnScores.SetActive(false);
+        }
+
+        spawnChance = Random.Range(1, 700);
+
+        debugButtonFunction();
+        //menuHandler();
 
         // After play button is clicked, spawn the initial parts (jumpguy and the first wall)
         if (GlobalVars.gameState == 1 && startGame == false)
@@ -49,11 +103,18 @@ public class GameLoop : MonoBehaviour
         //if we're alive, spawn walls and move things
         if (GlobalVars.isDead == false && GlobalVars.gameState == 1)
         {
-            spawnChance = Random.Range(0, 700);
             //spawn wall
-            if (spawnChance > 0 && spawnChance < 10)
+            if (spawnChance > 5.0f && spawnChance < 30.0f)
             {
-                Instantiate(wallPrefab, new Vector3(3.2f, Random.Range(-2.3f, -1.1f), 0), Quaternion.identity);
+                
+                if(spawnChance != last1 && spawnChance != last2)
+                {
+                    Debug.Log(spawnChance);
+                    Instantiate(wallPrefab, new Vector3(3.2f, Random.Range(-2.3f, -1.1f), 0), Quaternion.identity);
+                }
+                last1 = spawnChance;
+                last2 = last1;
+
             }
         }
 
@@ -69,12 +130,17 @@ public class GameLoop : MonoBehaviour
             Sky.enabled = true;
             SkyHigh.enabled = false;
             Sky.text = "HIGH SCORE: " + GlobalVars.highScore;
-        } else
+        } else if (GlobalVars.gameState == 2)
         {
             Sky.enabled = true;
             SkyHigh.enabled = true;
             Sky.text = "Score: " + GlobalVars.localScore;
             SkyHigh.text = "HIGH SCORE: " + GlobalVars.highScore;
+        } else if (GlobalVars.gameState == 3)
+        {
+            Sky.enabled = true;
+            SkyHigh.enabled = false;
+            Sky.text = "Global Highscores";
         }
 
         if(GlobalVars.isDead == true)
@@ -113,7 +179,10 @@ public class GameLoop : MonoBehaviour
                     if (touchedObject.name == "btnPlay")
                     {
                         Debug.Log("PLAY");
-                        GlobalVars.gameState = 1;
+                        if (PlayerPrefs.HasKey("userName"))
+                        {
+                            GlobalVars.gameState = 1;
+                        }
                     }
                 }
             }
@@ -196,6 +265,7 @@ public class GameLoop : MonoBehaviour
 
     void debugButtonFunction()
     {
+        //if we click the mouse button
         if (Input.GetMouseButtonDown(0))
         {
 
@@ -205,11 +275,19 @@ public class GameLoop : MonoBehaviour
             RaycastHit2D hit = Physics2D.Raycast(mousePos2D, Vector2.zero);
             if (hit.collider != null)
             {
+                //handle this for the PLAY button, gameState = 0
                 if (hit.collider.gameObject.name == "btnPlay")
-                {
+                { 
                     Debug.Log("PLAY");
-                    GlobalVars.gameState = 1;
+
+                    if (PlayerPrefs.HasKey("userName"))
+                    {
+                        ipf.SetActive(false);
+                        GlobalVars.gameState = 1;
+                    }
+
                 }
+                //handle this for the PLAY button, gameState = 2
                 else if (hit.collider.gameObject.name == "btnRetry")
                 {
                     Debug.Log("retry touch");
@@ -228,6 +306,10 @@ public class GameLoop : MonoBehaviour
                     {
                         GlobalVars.highScore = GlobalVars.localScore;
                         PlayerPrefs.SetInt("highscore",GlobalVars.highScore);
+                        if (CheckInternet.isOnline == true)
+                        {
+                            GetComponent<HSController>().CallAddScore(GlobalVars.userID.ToString(), PlayerPrefs.GetInt("highscore").ToString());
+                        }
                         GlobalVars.localScore = 0;
                     }
                     else
@@ -238,6 +320,7 @@ public class GameLoop : MonoBehaviour
                     GlobalVars.gameState = 1;
                     GlobalVars.isDead = false;
                 }
+                //handle this for the PLAY button, gameState = 2
                 else if (hit.collider.gameObject.name == "btnExit")
                 {
                     Debug.Log("exit touch");
@@ -256,6 +339,10 @@ public class GameLoop : MonoBehaviour
                     {
                         GlobalVars.highScore = GlobalVars.localScore;
                         PlayerPrefs.SetInt("highscore", GlobalVars.highScore);
+                        if (CheckInternet.isOnline == true)
+                        {
+                            GetComponent<HSController>().CallAddScore(GlobalVars.userID.ToString(), PlayerPrefs.GetInt("highscore").ToString());
+                        }
                         GlobalVars.localScore = 0;
                     }
                     else
@@ -265,6 +352,26 @@ public class GameLoop : MonoBehaviour
 
                     GlobalVars.gameState = 0;
                     GlobalVars.isDead = false;
+                }
+                else if (hit.collider.gameObject.name == "btnScores")
+                {
+                    GlobalVars.gameState = 3;
+                    if (CheckInternet.isOnline == true)
+                    {
+                        GetComponent<HSController>().CallGetScore();
+                    }
+                    scoreDisplay.getScore = false;
+                    scoreCanvas.SetActive(true);
+                }
+                else if (hit.collider.gameObject.name == "btnExit2")
+                {
+                    GlobalVars.gameState = 0;
+                    //delete the list items:
+                    for (int i = spawnPoint.transform.childCount - 1; i >= 0; i--)
+                    {
+                        GameObject.Destroy(spawnPoint.transform.GetChild(i).gameObject);
+                    }
+                    scoreCanvas.SetActive(false);
                 }
             }
         }

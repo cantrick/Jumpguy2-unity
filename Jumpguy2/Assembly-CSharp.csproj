@@ -65,11 +65,18 @@
     <Compile Include="Assets\Scripts\BackgroundMove.cs" />
     <Compile Include="Assets\Scripts\CamController.cs" />
     <Compile Include="Assets\Scripts\CharController.cs" />
+    <Compile Include="Assets\Scripts\CheckInternet.cs" />
     <Compile Include="Assets\Scripts\DebugButtonScript.cs" />
     <Compile Include="Assets\Scripts\ForegroundMove.cs" />
     <Compile Include="Assets\Scripts\GameLoop.cs" />
     <Compile Include="Assets\Scripts\GlobalVars.cs" />
+    <Compile Include="Assets\Scripts\InputName.cs" />
+    <Compile Include="Assets\Scripts\ItemDetails.cs" />
     <Compile Include="Assets\Scripts\WallMove.cs" />
+    <Compile Include="Assets\Scripts\scoreDisplay.cs" />
+    <Compile Include="Assets\Scripts\web calls\HSController.cs" />
+    <Compile Include="Assets\Scripts\web calls\addUserScript.cs" />
+    <None Include="Assets\Scripts\php\crossdomain.xml" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>D:/Documents/Git/Jumpguy2-unity/Jumpguy2-unity/Jumpguy2/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
