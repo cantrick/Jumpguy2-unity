@@ -56,6 +56,7 @@ public class GameLoop : MonoBehaviour
                 //get the username only if there is one
                 GetComponent<addUserScript>().CallGetUser(SystemInfo.deviceUniqueIdentifier);
                 ipf.SetActive(true);
+
             }
             else
             {

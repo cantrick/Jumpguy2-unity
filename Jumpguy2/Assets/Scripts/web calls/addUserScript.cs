@@ -124,7 +124,16 @@ public class addUserScript : MonoBehaviour
             ErrorText.enabled = false;
             //once we get userId, grab high score from DB
             CallGetUserName(deviceid);
-            GetComponent<HSController>().CallGetMyScore(GlobalVars.userID.ToString());
+            if (PlayerPrefs.HasKey("highscore"))
+            {
+                GetComponent<HSController>().CallAddScore(PlayerPrefs.GetInt("userId").ToString(), PlayerPrefs.GetInt("highscore").ToString());
+            }
+            else
+            {
+                GetComponent<HSController>().CallGetMyScore(GlobalVars.userID.ToString());
+
+            }
+
         }
     }
 
