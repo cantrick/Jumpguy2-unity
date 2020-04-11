@@ -56,6 +56,7 @@ public class HSController : MonoBehaviour
         {
             Debug.Log("DEBUG: " + www.downloadHandler.text);
             GlobalVars.scoreResults = www.downloadHandler.text.Split('#');
+            GlobalVars.gameState = 3;
         }
 
     }

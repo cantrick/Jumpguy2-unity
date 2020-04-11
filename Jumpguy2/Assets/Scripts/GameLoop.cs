@@ -48,7 +48,7 @@ public class GameLoop : MonoBehaviour
         //get highscore from file
         //PlayerPrefs.SetInt("highscore", 0);
         GlobalVars.highScore = PlayerPrefs.GetInt("highscore");
-        Debug.Log(SystemInfo.deviceUniqueIdentifier + " --- " + PlayerPrefs.GetString("userName"));
+        Debug.Log(SystemInfo.deviceUniqueIdentifier + "--" + PlayerPrefs.GetString("userName"));
         if (CheckInternet.isOnline == true)
         {
             if(!PlayerPrefs.HasKey("userId"))
@@ -59,6 +59,7 @@ public class GameLoop : MonoBehaviour
             }
             else
             {
+                GlobalVars.userID = PlayerPrefs.GetInt("userId");
                 btnPlay.SetActive(false);
                 btnScores.SetActive(false);
             }
@@ -109,7 +110,7 @@ public class GameLoop : MonoBehaviour
                 
                 if(spawnChance != last1 && spawnChance != last2)
                 {
-                    Debug.Log(spawnChance);
+                    //Debug.Log(spawnChance);
                     Instantiate(wallPrefab, new Vector3(3.2f, Random.Range(-2.3f, -1.1f), 0), Quaternion.identity);
                 }
                 last1 = spawnChance;
@@ -279,6 +280,7 @@ public class GameLoop : MonoBehaviour
                 if (hit.collider.gameObject.name == "btnPlay")
                 { 
                     Debug.Log("PLAY");
+                    Debug.Log(GlobalVars.userID + " : " + PlayerPrefs.GetInt("userId") + " : " + PlayerPrefs.GetString("userName") + " : " + PlayerPrefs.GetInt("highscore"));
 
                     if (PlayerPrefs.HasKey("userName"))
                     {
@@ -308,7 +310,7 @@ public class GameLoop : MonoBehaviour
                         PlayerPrefs.SetInt("highscore",GlobalVars.highScore);
                         if (CheckInternet.isOnline == true)
                         {
-                            GetComponent<HSController>().CallAddScore(GlobalVars.userID.ToString(), PlayerPrefs.GetInt("highscore").ToString());
+                            GetComponent<HSController>().CallAddScore(PlayerPrefs.GetInt("userId").ToString(), PlayerPrefs.GetInt("highscore").ToString());
                         }
                         GlobalVars.localScore = 0;
                     }
@@ -341,7 +343,7 @@ public class GameLoop : MonoBehaviour
                         PlayerPrefs.SetInt("highscore", GlobalVars.highScore);
                         if (CheckInternet.isOnline == true)
                         {
-                            GetComponent<HSController>().CallAddScore(GlobalVars.userID.ToString(), PlayerPrefs.GetInt("highscore").ToString());
+                            GetComponent<HSController>().CallAddScore(PlayerPrefs.GetInt("userId").ToString(), PlayerPrefs.GetInt("highscore").ToString());
                         }
                         GlobalVars.localScore = 0;
                     }
@@ -355,10 +357,14 @@ public class GameLoop : MonoBehaviour
                 }
                 else if (hit.collider.gameObject.name == "btnScores")
                 {
-                    GlobalVars.gameState = 3;
+
                     if (CheckInternet.isOnline == true)
                     {
                         GetComponent<HSController>().CallGetScore();
+                    }
+                    else
+                    {
+                        //TODO make it so high score list just says "Not connected to internet"
                     }
                     scoreDisplay.getScore = false;
                     scoreCanvas.SetActive(true);
