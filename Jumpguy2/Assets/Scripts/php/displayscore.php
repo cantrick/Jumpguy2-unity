@@ -9,7 +9,7 @@
  
         // Strings must be escaped to prevent SQL injection attack. 
 
-        $scorecheckquery = "SELECT users.name,scores.score FROM scores join users on scores.user_id = users.user_id order by 2 desc limit 10;";
+        $scorecheckquery = "SELECT users.name,scores.score FROM scores join users on scores.user_id = users.user_id order by 2 desc;";
         $scorecheck = mysqli_query($db, $scorecheckquery) or die("ERROR: Score grab query failed");
 
         if (mysqli_num_rows($scorecheck) < 1)

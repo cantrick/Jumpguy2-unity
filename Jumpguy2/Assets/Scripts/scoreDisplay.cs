@@ -10,6 +10,7 @@ public class scoreDisplay : MonoBehaviour
 
     [SerializeField]
     private Transform SpawnPoint = null;
+    public RectTransform content;
 
     [SerializeField]
     private GameObject item = null;
@@ -46,6 +47,7 @@ public class scoreDisplay : MonoBehaviour
 
                 //score.GetComponent<Text>().text = GlobalVars.scoreResults[i];
             }
+            content.sizeDelta = new Vector2(0, (GlobalVars.scoreResults.Length*30));
             getScore = true;
         }
     }
