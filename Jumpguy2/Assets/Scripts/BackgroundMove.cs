@@ -23,13 +23,13 @@ public class BackgroundMove : MonoBehaviour
     {
         if (GlobalVars.isDead == false && GlobalVars.gameState == 1)
         {
-            horizontal = new Vector3(speed + (float)(GlobalVars.localScore / 12.0f), 0, 0);
+            horizontal = new Vector3(speed + (float)(GlobalVars.localScore / 19.0f), 0, 0);
             transform.position = transform.position - (horizontal * Time.deltaTime);
 
             //spawn background
             if ((transform.position.x < -2.3f) && bgSpawn == true)
             {
-                Instantiate(bgPrefab, new Vector3(7.90f, 0, 2), Quaternion.identity);
+                Instantiate(bgPrefab, new Vector3(7.85f, 0, 2), Quaternion.identity);
                 bgSpawn = false;
             }
             else if (transform.position.x < -7.93f)

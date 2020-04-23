@@ -18,6 +18,14 @@ public class CharController : MonoBehaviour
     {
         if (GlobalVars.isDead == false)
         {
+            //Start moving back to initial position if moved
+            if (!Mathf.Approximately(transform.position.x,-1.5f))
+            {
+                //Debug.Log("OOOOO HE MOVIN'");
+                transform.position = Vector2.MoveTowards(transform.position,new Vector2(-1.5f,transform.position.y),Time.deltaTime);
+                
+            }
+
             GetComponent<Rigidbody2D>().gravityScale = 5;
             //change jump height based on how many jumps you've used
             switch (jumps)
@@ -54,12 +62,16 @@ public class CharController : MonoBehaviour
             jumps = 0;
         }
 
+        //Debug.Log(transform.position.y + " : " + collision.gameObject.transform.position.y);
+
         //add fail state if you crash into side of the wall
         if (collision.gameObject.tag == "Wall")
         {
-            if((collision.gameObject.transform.position.y + (collision.gameObject.GetComponent<Collider2D>().bounds.size.y / 2)) > transform.position.y )
+            if ((collision.gameObject.transform.position.y + (collision.gameObject.GetComponent<Collider2D>().bounds.size.y / 2)) > transform.position.y)
             {
+
                 /*
+                FIXED COLLISION: transform.position.y < (collision.gameObject.transform.position.y + 1.4f               
                 Debug.Log("ColliderPOS is: " + collision.gameObject.transform.position.y);
                 Debug.Log("Collider TOP is: " + (collision.gameObject.transform.position.y + (collision.gameObject.GetComponent<Collider2D>().bounds.size.y/2)));
                 Debug.Log("Collider is: " + collision.gameObject.GetComponent<Collider2D>().bounds.size.y);

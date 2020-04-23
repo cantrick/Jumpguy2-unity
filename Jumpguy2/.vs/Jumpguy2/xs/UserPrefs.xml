@@ -1,12 +1,16 @@
 ﻿<Properties StartupConfiguration="{11F1D67C-99A5-DA3C-A1BC-9EB717E2353E}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/ForegroundMove.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/CharController.cs">
     <Files>
-      <File FileName="Assets/Scripts/GameLoop.cs" Line="13" Column="21" />
-      <File FileName="Assets/Scripts/CharController.cs" Line="24" Column="24" />
+      <File FileName="Assets/Scripts/GameLoop.cs" Line="61" Column="17" />
       <File FileName="Assets/Scripts/GlobalVars.cs" Line="8" Column="39" />
-      <File FileName="Assets/Scripts/WallMove.cs" Line="27" Column="39" />
-      <File FileName="Assets/Scripts/BackgroundMove.cs" Line="22" Column="18" />
-      <File FileName="Assets/Scripts/ForegroundMove.cs" Line="24" Column="24" />
+      <File FileName="Assets/Scripts/WallMove.cs" Line="45" Column="38" />
+      <File FileName="Assets/Scripts/BackgroundMove.cs" Line="18" Column="45" />
+      <File FileName="Assets/Scripts/ForegroundMove.cs" Line="32" Column="55" />
+      <File FileName="Assets/Scripts/scoreDisplay.cs" Line="12" Column="41" />
+      <File FileName="Assets/Scripts/web calls/HSController.cs" Line="23" Column="1" />
+      <File FileName="Assets/Scripts/web calls/addUserScript.cs" Line="19" Column="31" />
+      <File FileName="Assets/Scripts/InputName.cs" Line="33" Column="10" />
+      <File FileName="Assets/Scripts/CharController.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
