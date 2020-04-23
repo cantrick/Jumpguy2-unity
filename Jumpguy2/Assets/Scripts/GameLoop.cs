@@ -29,6 +29,8 @@ public class GameLoop : MonoBehaviour
     bool gotHSfromDB = false;
 
     public Component[] sRenderers;
+    public float timeBetweenSpawn;
+    public float elapsedTime;
 
     // Start is called before the first frame update
     void Start()
@@ -46,6 +48,7 @@ public class GameLoop : MonoBehaviour
         btnRetry.SetActive(false);
         scoreCanvas.SetActive(false);
 
+        elapsedTime = 0.0f;
 
         //get highscore from file
         //PlayerPrefs.SetInt("highscore", 0);
@@ -107,6 +110,16 @@ public class GameLoop : MonoBehaviour
         //if we're alive, spawn walls and move things
         if (GlobalVars.isDead == false && GlobalVars.gameState == 1)
         {
+            timeBetweenSpawn = Random.Range(0.05f, 15.2f);
+            elapsedTime += Time.deltaTime;
+
+            if(elapsedTime > timeBetweenSpawn)
+            {
+                spawnWalls();
+                elapsedTime = 0.0f;
+              
+            }
+            /*
             //spawn wall
             if (spawnChance > 5.0f && spawnChance < 40.0f)
             {
@@ -145,7 +158,7 @@ public class GameLoop : MonoBehaviour
                 last2 = last1;
 
             }
-
+            */
 
         }
 
@@ -188,6 +201,38 @@ public class GameLoop : MonoBehaviour
         //display retry and exit buttons
         btnExit.SetActive(true);
         btnRetry.SetActive(true);
+    }
+
+    void spawnWalls() {
+
+        //Debug.Log(spawnChance);
+        GameObject tempObject = Instantiate(wallPrefab, new Vector3(3.2f, Random.Range(-2.3f, -1.1f), 0), Quaternion.identity);
+
+        if(tempObject.transform.position.y <= -1.9f)
+        {
+            sRenderers = tempObject.GetComponentsInChildren<SpriteRenderer>();
+            foreach (SpriteRenderer sprite in sRenderers)
+            {
+                sprite.color = Color.green;
+            }
+        } 
+        else if (tempObject.transform.position.y > -1.5f)
+        {
+            sRenderers = tempObject.GetComponentsInChildren<SpriteRenderer>();
+            foreach (SpriteRenderer sprite in sRenderers)
+            {
+                sprite.color = Color.red;
+            }
+        }
+        else
+        {
+            sRenderers = tempObject.GetComponentsInChildren<SpriteRenderer>();
+            foreach (SpriteRenderer sprite in sRenderers)
+            {
+               sprite.color = Color.yellow;
+            }
+        }
+
     }
 
     void menuHandler()
