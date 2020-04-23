@@ -119,46 +119,6 @@ public class GameLoop : MonoBehaviour
                 elapsedTime = 0.0f;
               
             }
-            /*
-            //spawn wall
-            if (spawnChance > 5.0f && spawnChance < 40.0f)
-            {
-                
-                if(!Mathf.Approximately(spawnChance,last1) && !Mathf.Approximately(spawnChance, last2))
-                {
-                    //Debug.Log(spawnChance);
-                    GameObject tempObject = Instantiate(wallPrefab, new Vector3(3.2f, Random.Range(-2.3f, -1.1f), 0), Quaternion.identity);
-
-                    if(tempObject.transform.position.y <= -1.9f)
-                    {
-                        sRenderers = tempObject.GetComponentsInChildren<SpriteRenderer>();
-                        foreach (SpriteRenderer sprite in sRenderers)
-                        {
-                            sprite.color = Color.green;
-                        }
-                    } 
-                    else if (tempObject.transform.position.y > -1.5f)
-                    {
-                        sRenderers = tempObject.GetComponentsInChildren<SpriteRenderer>();
-                        foreach (SpriteRenderer sprite in sRenderers)
-                        {
-                            sprite.color = Color.red;
-                        }
-                    }
-                    else
-                    {
-                        sRenderers = tempObject.GetComponentsInChildren<SpriteRenderer>();
-                        foreach (SpriteRenderer sprite in sRenderers)
-                        {
-                            sprite.color = Color.yellow;
-                        }
-                    }
-                }
-                last1 = spawnChance;
-                last2 = last1;
-
-            }
-            */
 
         }
 
