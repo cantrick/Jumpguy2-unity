@@ -302,7 +302,7 @@ public class GameLoop : MonoBehaviour
     void debugButtonFunction()
     {
         //if we click the mouse button
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonUp(0))
         {
 
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);

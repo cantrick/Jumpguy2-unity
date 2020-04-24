@@ -7,6 +7,8 @@ public class CharController : MonoBehaviour
     public int jumpSpeed;
 
     private int jumps = 0;
+    Vector2 mousePos2D;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -44,9 +46,28 @@ public class CharController : MonoBehaviour
             //add force to jump!
             if (Input.GetMouseButtonDown(0) && jumps < 3)
             {
-                GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-                GetComponent<Rigidbody2D>().AddForce(new Vector2(0, jumpSpeed));
-                jumps += 1;
+                Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                mousePos2D = new Vector2(mousePos.x, mousePos.y);
+                
+            }
+
+            if(Input.GetMouseButtonUp(0)) {
+                    Vector3 newMousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                    Vector2 newMousePos2D = new Vector2(newMousePos.x, newMousePos.y);
+
+                    Debug.Log(newMousePos2D.y + " < " + mousePos2D.y);
+
+                    if(newMousePos2D.y < mousePos2D.y-0.5f) {
+                        Debug.Log("Swipe down");
+                        GetComponent<Rigidbody2D>().AddForce(new Vector2(0, -jumpSpeed));
+                    }
+                    else
+                    {
+                        GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+                        GetComponent<Rigidbody2D>().AddForce(new Vector2(0, jumpSpeed));
+                        jumps += 1;
+                    }
+
             }
         } else
         {
