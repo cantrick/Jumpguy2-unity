@@ -9,6 +9,7 @@ public class GameLoop : MonoBehaviour
     public GameObject wallPrefab;
     public Text Sky;
     public Text SkyHigh;
+    public Text ErrorText;
 
 
     Vector3 touchPosWorld;
@@ -21,6 +22,7 @@ public class GameLoop : MonoBehaviour
     GameObject ipf;
     GameObject scoreCanvas;
     GameObject spawnPoint;
+    public GameObject lNum;
     //private string deviceid;
 
     float spawnChance = 0.0f;
@@ -28,9 +30,20 @@ public class GameLoop : MonoBehaviour
     float last2 = 0;
     bool gotHSfromDB = false;
 
+
     public Component[] sRenderers;
     public float timeBetweenSpawn;
     public float elapsedTime;
+    public Sprite num0;
+    public Sprite num1;
+    public Sprite num2;
+    public Sprite num3;
+    public Sprite num4;
+    public Sprite num5;
+    public Sprite num6;
+    public Sprite num7;
+    public Sprite num8;
+    public Sprite num9;
 
     // Start is called before the first frame update
     void Start()
@@ -42,11 +55,13 @@ public class GameLoop : MonoBehaviour
         btnScores = GameObject.Find("btnScores");
         ipf = GameObject.Find("InputField");
         scoreCanvas = GameObject.Find("ScoreCanvas");
-        spawnPoint = GameObject.Find("SpawnPoint"); 
+        spawnPoint = GameObject.Find("SpawnPoint");
 
         btnExit.SetActive(false);
         btnRetry.SetActive(false);
         scoreCanvas.SetActive(false);
+
+        ErrorText.enabled = false;
 
         elapsedTime = 0.0f;
 
@@ -83,8 +98,12 @@ public class GameLoop : MonoBehaviour
 
         if (PlayerPrefs.HasKey("userName"))
         {
+            if(ErrorText.enabled == false)
+            {
+                btnPlay.SetActive(true);
+
+            }
             ipf.SetActive(false);
-            btnPlay.SetActive(true);
             btnScores.SetActive(true);
         }
         else
@@ -96,6 +115,7 @@ public class GameLoop : MonoBehaviour
         spawnChance = Random.Range(1, 700);
 
         debugButtonFunction();
+        scoreSprites();
         //menuHandler();
 
         // After play button is clicked, spawn the initial parts (jumpguy and the first wall)
@@ -125,9 +145,9 @@ public class GameLoop : MonoBehaviour
         //display score
         if (GlobalVars.gameState == 1)
         {
-            Sky.enabled = true;
+            Sky.enabled = false;
             SkyHigh.enabled = false;
-            Sky.text = "Score: " + GlobalVars.localScore;
+            //Sky.text = "Score: " + GlobalVars.localScore;
         }
         else if (GlobalVars.gameState == 0)
         {
@@ -136,12 +156,13 @@ public class GameLoop : MonoBehaviour
             Sky.text = "HIGH SCORE: " + GlobalVars.highScore;
         } else if (GlobalVars.gameState == 2)
         {
-            Sky.enabled = true;
+            //Sky.enabled = true;
             SkyHigh.enabled = true;
-            Sky.text = "Score: " + GlobalVars.localScore;
+            //Sky.text = "Score: " + GlobalVars.localScore;
             SkyHigh.text = "HIGH SCORE: " + GlobalVars.highScore;
         } else if (GlobalVars.gameState == 3)
         {
+            ErrorText.enabled = false;
             Sky.enabled = true;
             SkyHigh.enabled = false;
             Sky.text = "Global Highscores";
@@ -299,6 +320,64 @@ public class GameLoop : MonoBehaviour
         }
     }
 
+
+    void scoreSprites()
+    {
+        foreach (GameObject o in GameObject.FindGameObjectsWithTag("Score"))
+        {
+            Destroy(o);
+        }
+
+        char[] ca = GlobalVars.localScore.ToString().ToCharArray();
+
+        GameObject tempHolder = GameObject.Find("Numbers");
+
+        for(int i = 0;i<ca.Length;i++)
+        {
+
+            GameObject tempNumObject = Instantiate(lNum,
+                new Vector3(tempHolder.transform.position.x+((float)i/2),
+                            tempHolder.transform.position.y,
+                            tempHolder.transform.position.z)
+                ,Quaternion.identity);
+
+            switch (ca[i])
+            {
+                case '0':
+                    tempNumObject.GetComponent<SpriteRenderer>().sprite = num0;
+                    break;
+                case '8':
+                    tempNumObject.GetComponent<SpriteRenderer>().sprite = num8;
+                    break;
+                case '1':
+                    tempNumObject.GetComponent<SpriteRenderer>().sprite = num1;
+                    break;
+                case '2':
+                    tempNumObject.GetComponent<SpriteRenderer>().sprite = num2;
+                    break;
+                case '3':
+                    tempNumObject.GetComponent<SpriteRenderer>().sprite = num3;
+                    break;
+                case '4':
+                    tempNumObject.GetComponent<SpriteRenderer>().sprite = num4;
+                    break;
+                case '5':
+                    tempNumObject.GetComponent<SpriteRenderer>().sprite = num5;
+                    break;
+                case '6':
+                    tempNumObject.GetComponent<SpriteRenderer>().sprite = num6;
+                    break;
+                case '7':
+                    tempNumObject.GetComponent<SpriteRenderer>().sprite = num7;
+                    break;
+                case '9':
+                    tempNumObject.GetComponent<SpriteRenderer>().sprite = num9;
+                    break;
+            }
+
+        }
+    }
+
     void debugButtonFunction()
     {
         //if we click the mouse button
@@ -395,7 +474,10 @@ public class GameLoop : MonoBehaviour
 
                     if (CheckInternet.isOnline == true)
                     {
-                        GetComponent<HSController>().CallGetScore();
+                        ErrorText.enabled = true;
+                        ErrorText.text = "Loading scores...";
+                        btnPlay.SetActive(false);
+                        GetComponent<HSController>().CallGetScore(); 
                     }
                     else
                     {
@@ -407,6 +489,7 @@ public class GameLoop : MonoBehaviour
                 else if (hit.collider.gameObject.name == "btnExit2")
                 {
                     GlobalVars.gameState = 0;
+                    btnPlay.SetActive(true);
                     //delete the list items:
                     for (int i = spawnPoint.transform.childCount - 1; i >= 0; i--)
                     {

@@ -7,6 +7,7 @@ TagManager:
   - Scenery
   - Wall
   - Jumpguy
+  - Score
   layers:
   - Default
   - TransparentFX

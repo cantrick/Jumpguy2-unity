@@ -48,7 +48,13 @@ public class CharController : MonoBehaviour
             {
                 Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 mousePos2D = new Vector2(mousePos.x, mousePos.y);
-                
+
+                if (jumps < 3)
+                {
+                    GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+                    GetComponent<Rigidbody2D>().AddForce(new Vector2(0, jumpSpeed));
+                    jumps += 1;
+                }
             }
 
             if(Input.GetMouseButtonUp(0)) {
@@ -60,12 +66,6 @@ public class CharController : MonoBehaviour
                     if(newMousePos2D.y < mousePos2D.y-0.5f) {
                         Debug.Log("Swipe down");
                         GetComponent<Rigidbody2D>().AddForce(new Vector2(0, -jumpSpeed));
-                    }
-                    else
-                    {
-                        GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-                        GetComponent<Rigidbody2D>().AddForce(new Vector2(0, jumpSpeed));
-                        jumps += 1;
                     }
 
             }
