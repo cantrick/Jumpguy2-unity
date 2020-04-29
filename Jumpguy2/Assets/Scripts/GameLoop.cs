@@ -122,7 +122,7 @@ public class GameLoop : MonoBehaviour
         if (GlobalVars.gameState == 1 && startGame == false)
         {
             jgClone = Instantiate(jumpGuy, new Vector3(-1.5f, -1.5f, -1.2f), Quaternion.identity);
-            Instantiate(wallPrefab, new Vector3(3.2f, Random.Range(-2.3f, -1.1f), 0), Quaternion.identity);
+            Instantiate(wallPrefab, new Vector3(3.2f, Random.Range(-2.3f, -9.1f), 0), Quaternion.identity);
             startGame = true;
         }
 

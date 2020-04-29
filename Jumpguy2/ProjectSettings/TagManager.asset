@@ -8,6 +8,7 @@ TagManager:
   - Wall
   - Jumpguy
   - Score
+  - bg2
   layers:
   - Default
   - TransparentFX
