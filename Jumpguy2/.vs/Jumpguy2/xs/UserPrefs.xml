@@ -1,11 +1,11 @@
 ﻿<Properties StartupConfiguration="{11F1D67C-99A5-DA3C-A1BC-9EB717E2353E}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/GameLoop.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/WallMove.cs">
     <Files>
-      <File FileName="Assets/Scripts/GameLoop.cs" Line="122" Column="61" />
-      <File FileName="Assets/Scripts/GlobalVars.cs" />
-      <File FileName="Assets/Scripts/WallMove.cs" />
-      <File FileName="Assets/Scripts/BackgroundMove.cs" Line="35" Column="59" />
-      <File FileName="Assets/Scripts/ForegroundMove.cs" Line="32" Column="54" />
+      <File FileName="Assets/Scripts/GameLoop.cs" Line="72" Column="29" />
+      <File FileName="Assets/Scripts/GlobalVars.cs" Line="20" Column="6" />
+      <File FileName="Assets/Scripts/WallMove.cs" Line="34" Column="40" />
+      <File FileName="Assets/Scripts/BackgroundMove.cs" />
+      <File FileName="Assets/Scripts/ForegroundMove.cs" />
       <File FileName="Assets/Scripts/scoreDisplay.cs" />
       <File FileName="Assets/Scripts/web calls/HSController.cs" />
       <File FileName="Assets/Scripts/web calls/addUserScript.cs" />
@@ -22,7 +22,7 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="1eade9c4-35e1-40d3-8b5f-b4b80735abf1" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="aed2cefa-893f-4cb9-bd57-d64f54bac937" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

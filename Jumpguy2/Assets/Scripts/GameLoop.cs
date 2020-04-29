@@ -64,6 +64,7 @@ public class GameLoop : MonoBehaviour
         ErrorText.enabled = false;
 
         elapsedTime = 0.0f;
+        Sky.color = Color.white;
 
         //get highscore from file
         //PlayerPrefs.SetInt("highscore", 0);
@@ -166,9 +167,10 @@ public class GameLoop : MonoBehaviour
             Sky.enabled = true;
             SkyHigh.enabled = false;
             Sky.text = "Global Highscores";
+
         }
 
-        if(GlobalVars.isDead == true)
+        if (GlobalVars.isDead == true)
         {
             GlobalVars.gameState = 2;
             playerDies();
