@@ -9,6 +9,9 @@ TagManager:
   - Jumpguy
   - Score
   - bg2
+  - pform
+  - tree
+  - Shake
   layers:
   - Default
   - TransparentFX

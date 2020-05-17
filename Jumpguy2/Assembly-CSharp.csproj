@@ -73,6 +73,7 @@
     <Compile Include="Assets\Scripts\GlobalVars.cs" />
     <Compile Include="Assets\Scripts\InputName.cs" />
     <Compile Include="Assets\Scripts\ItemDetails.cs" />
+    <Compile Include="Assets\Scripts\ShakeBehavior.cs" />
     <Compile Include="Assets\Scripts\WallMove.cs" />
     <Compile Include="Assets\Scripts\scoreDisplay.cs" />
     <Compile Include="Assets\Scripts\web calls\HSController.cs" />
@@ -633,6 +634,16 @@
     <Reference Include="mscorlib">
       <HintPath>/Applications/Unity/Hub/Editor/2019.3.2f1/Unity.app/Contents/NetStandard/compat/2.0.0/shims/netfx/mscorlib.dll</HintPath>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="GoogleMobileAds.csproj">
+      <Project>{B67FC0CA-2A8E-E52E-321F-1078DF5B813D}</Project>
+      <Name>GoogleMobileAds</Name>
+    </ProjectReference>
+    <ProjectReference Include="GoogleMobileAds.Editor.csproj">
+      <Project>{9CA33A9B-5130-14BC-E86D-67259C1A0FAB}</Project>
+      <Name>GoogleMobileAds.Editor</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

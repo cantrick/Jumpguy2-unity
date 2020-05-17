@@ -2,14 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using GoogleMobileAds.Api;
 
 public class GameLoop : MonoBehaviour
 {
     public GameObject jumpGuy;
     public GameObject wallPrefab;
+    public GameObject platfPrefab;
     public Text Sky;
     public Text SkyHigh;
     public Text ErrorText;
+    public GameObject tree1;
+    public GameObject tree2;
 
 
     Vector3 touchPosWorld;
@@ -23,6 +27,7 @@ public class GameLoop : MonoBehaviour
     GameObject scoreCanvas;
     GameObject spawnPoint;
     public GameObject lNum;
+    private int wallCount;
     //private string deviceid;
 
     float spawnChance = 0.0f;
@@ -45,6 +50,8 @@ public class GameLoop : MonoBehaviour
     public Sprite num8;
     public Sprite num9;
 
+    private BannerView bannerView;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -62,6 +69,10 @@ public class GameLoop : MonoBehaviour
         scoreCanvas.SetActive(false);
 
         ErrorText.enabled = false;
+
+        MobileAds.Initialize(initStatus => { });
+        this.RequestBanner();
+
 
         elapsedTime = 0.0f;
         Sky.color = Color.white;
@@ -112,8 +123,6 @@ public class GameLoop : MonoBehaviour
             ipf.SetActive(true);
             btnScores.SetActive(false);
         }
-
-        spawnChance = Random.Range(1, 700);
 
         debugButtonFunction();
         scoreSprites();
@@ -179,6 +188,17 @@ public class GameLoop : MonoBehaviour
 
     }
 
+    private void RequestBanner()
+    {
+        
+        string adUnitId = "ca-app-pub-3940256099942544/6300978111";
+
+        // Create a 320x50 banner at the top of the screen.
+        this.bannerView = new BannerView(adUnitId, AdSize.Banner, AdPosition.Bottom);
+
+        
+    }
+
     void playerDies()
     {
         //display retry and exit buttons
@@ -187,34 +207,61 @@ public class GameLoop : MonoBehaviour
     }
 
     void spawnWalls() {
+        GameObject tempObject;
 
         //Debug.Log(spawnChance);
-        GameObject tempObject = Instantiate(wallPrefab, new Vector3(3.2f, Random.Range(-2.3f, -1.1f), 0), Quaternion.identity);
-
-        if(tempObject.transform.position.y <= -1.9f)
+        if(wallCount > 5)
         {
-            sRenderers = tempObject.GetComponentsInChildren<SpriteRenderer>();
-            foreach (SpriteRenderer sprite in sRenderers)
-            {
-                sprite.color = Color.green;
-            }
-        } 
-        else if (tempObject.transform.position.y > -1.5f)
-        {
-            sRenderers = tempObject.GetComponentsInChildren<SpriteRenderer>();
-            foreach (SpriteRenderer sprite in sRenderers)
-            {
-                sprite.color = Color.red;
-            }
+            tempObject = Instantiate(platfPrefab, new Vector3(5.1f, Random.Range(-1.64f, -0.64f), -1.4f), Quaternion.identity);
+            wallCount = 0;
         }
         else
         {
-            sRenderers = tempObject.GetComponentsInChildren<SpriteRenderer>();
-            foreach (SpriteRenderer sprite in sRenderers)
+            tempObject = Instantiate(wallPrefab, new Vector3(3.2f, Random.Range(-2.3f, -1.1f), 0), Quaternion.identity);
+
+            if (tempObject.transform.position.y <= -1.9f)
             {
-               sprite.color = Color.yellow;
+                sRenderers = tempObject.GetComponentsInChildren<SpriteRenderer>();
+                foreach (SpriteRenderer sprite in sRenderers)
+                {
+                    sprite.color = Color.green;
+                }
+            }
+            else if (tempObject.transform.position.y > -1.5f)
+            {
+                sRenderers = tempObject.GetComponentsInChildren<SpriteRenderer>();
+                foreach (SpriteRenderer sprite in sRenderers)
+                {
+                    sprite.color = Color.red;
+                }
+            }
+            else
+            {
+                sRenderers = tempObject.GetComponentsInChildren<SpriteRenderer>();
+                foreach (SpriteRenderer sprite in sRenderers)
+                {
+                    sprite.color = Color.yellow;
+                }
             }
         }
+
+        if(wallCount%3 == 0)
+        {
+            int temprand = Random.Range(0, 3);
+            if (temprand <= 1)
+            {
+                Instantiate(tree1, new Vector3(5.1f, -1.1f, 0.5f), Quaternion.identity);
+
+            }
+            else
+            {
+                Instantiate(tree2, new Vector3(5.1f, -0.693f, 0.5f), Quaternion.identity);
+
+            }
+        }
+
+
+        wallCount += 1;
 
     }
 
@@ -249,6 +296,14 @@ public class GameLoop : MonoBehaviour
         else if (GlobalVars.gameState == 2 && GlobalVars.isDead == true)
         {
             //this is when we would see the RETRY or EXIT buttons in game
+
+            //Let's load an ad
+            // Create an empty ad request.
+            AdRequest request = new AdRequest.Builder().Build();
+
+            // Load the banner with the request.
+            this.bannerView.LoadAd(request);
+
             if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended)
             {
                 touchPosWorld = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
@@ -264,6 +319,7 @@ public class GameLoop : MonoBehaviour
                     if (touchedObject.name == "btnRetry")
                     {
                         Debug.Log("retry touch");
+                        bannerView.Destroy();
                         //Delete walls, move background/foreground/jumpguy back to initial positions
                         foreach (GameObject o in GameObject.FindGameObjectsWithTag("Wall"))
                         {
@@ -292,6 +348,7 @@ public class GameLoop : MonoBehaviour
                     else if (touchedObject.name == "btnExit")
                     {
                         Debug.Log("exit touch");
+                        bannerView.Destroy();
                         //Delete walls, move background/foreground/jumpguy back to initial positions
                         foreach (GameObject o in GameObject.FindGameObjectsWithTag("Wall"))
                         {
@@ -411,6 +468,10 @@ public class GameLoop : MonoBehaviour
                     Debug.Log("retry touch");
                     //Delete walls, move background/foreground/jumpguy back to initial positions
                     foreach (GameObject o in GameObject.FindGameObjectsWithTag("Wall"))
+                    {
+                        Destroy(o);
+                    }
+                    foreach (GameObject o in GameObject.FindGameObjectsWithTag("pform"))
                     {
                         Destroy(o);
                     }
