@@ -1,7 +1,7 @@
 ﻿<Properties StartupConfiguration="{11F1D67C-99A5-DA3C-A1BC-9EB717E2353E}|">
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/GameLoop.cs">
     <Files>
-      <File FileName="Assets/Scripts/GameLoop.cs" Line="351" Column="46" />
+      <File FileName="Assets/Scripts/GameLoop.cs" Line="529" Column="38" />
       <File FileName="Assets/Scripts/GlobalVars.cs" />
       <File FileName="Assets/Scripts/WallMove.cs" />
       <File FileName="Assets/Scripts/BackgroundMove.cs" />
@@ -10,7 +10,7 @@
       <File FileName="Assets/Scripts/web calls/HSController.cs" />
       <File FileName="Assets/Scripts/web calls/addUserScript.cs" />
       <File FileName="Assets/Scripts/InputName.cs" />
-      <File FileName="Assets/Scripts/CharController.cs" Line="51" Column="55" />
+      <File FileName="Assets/Scripts/CharController.cs" />
       <File FileName="Assets/Scripts/ShakeBehavior.cs" />
     </Files>
     <Pads>

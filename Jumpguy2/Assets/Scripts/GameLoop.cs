@@ -34,7 +34,7 @@ public class GameLoop : MonoBehaviour
     float last1 = 0;
     float last2 = 0;
     bool gotHSfromDB = false;
-
+    bool adLoaded = false;
 
     public Component[] sRenderers;
     public float timeBetweenSpawn;
@@ -297,12 +297,18 @@ public class GameLoop : MonoBehaviour
         {
             //this is when we would see the RETRY or EXIT buttons in game
 
-            //Let's load an ad
-            // Create an empty ad request.
-            AdRequest request = new AdRequest.Builder().Build();
+            //Should we load an ad?
+            if(adLoaded == false)
+            {
+                //Let's load an ad
+                // Create an empty ad request.
+                AdRequest request = new AdRequest.Builder().Build();
 
-            // Load the banner with the request.
-            this.bannerView.LoadAd(request);
+                // Load the banner with the request.
+                this.bannerView.LoadAd(request);
+                adLoaded = true;
+            }
+            
 
             if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended)
             {
@@ -316,15 +322,17 @@ public class GameLoop : MonoBehaviour
                     Debug.Log("death222");
                     //We should have hit something with a 2D Physics collider!
                     GameObject touchedObject = hitInformation.transform.gameObject;
+                    adLoaded = false;
                     if (touchedObject.name == "btnRetry")
                     {
                         Debug.Log("retry touch");
-                        bannerView.Destroy();
+                        
                         //Delete walls, move background/foreground/jumpguy back to initial positions
                         foreach (GameObject o in GameObject.FindGameObjectsWithTag("Wall"))
                         {
                             Destroy(o);
                         }
+                        
                         Destroy(jgClone);
                         startGame = false;
                         btnExit.SetActive(false);
@@ -354,6 +362,7 @@ public class GameLoop : MonoBehaviour
                         {
                             Destroy(o);
                         }
+                        
                         Destroy(jgClone);
                         startGame = false;
                         btnExit.SetActive(false);
@@ -476,6 +485,9 @@ public class GameLoop : MonoBehaviour
                         Destroy(o);
                     }
                     Destroy(jgClone);
+                    bannerView.Destroy();
+                    this.RequestBanner();
+                    adLoaded = false;
                     startGame = false;
                     btnExit.SetActive(false);
                     btnRetry.SetActive(false);
@@ -508,7 +520,13 @@ public class GameLoop : MonoBehaviour
                     {
                         Destroy(o);
                     }
+                    foreach (GameObject o in GameObject.FindGameObjectsWithTag("pform"))
+                    {
+                        Destroy(o);
+                    }
                     Destroy(jgClone);
+                    bannerView.Destroy();
+                    adLoaded = false;
                     startGame = false;
                     btnExit.SetActive(false);
                     btnRetry.SetActive(false);
