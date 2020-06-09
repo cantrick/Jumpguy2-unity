@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using GoogleMobileAds.Api;
 
 public class GameLoop : MonoBehaviour
@@ -51,7 +53,8 @@ public class GameLoop : MonoBehaviour
     public Sprite num9;
 
     private BannerView bannerView;
-
+    private string bannerAdId = "ca-app-pub-3940256099942544/6300978111";
+    private string appId = "ca-app-pub-3349476549916905~3847937716";
     // Start is called before the first frame update
     void Start()
     {
@@ -70,7 +73,7 @@ public class GameLoop : MonoBehaviour
 
         ErrorText.enabled = false;
 
-        MobileAds.Initialize(initStatus => { });
+        MobileAds.Initialize(appId);
         this.RequestBanner();
 
 
@@ -132,7 +135,7 @@ public class GameLoop : MonoBehaviour
         if (GlobalVars.gameState == 1 && startGame == false)
         {
             jgClone = Instantiate(jumpGuy, new Vector3(-1.5f, -1.5f, -1.2f), Quaternion.identity);
-            Instantiate(wallPrefab, new Vector3(3.2f, Random.Range(-2.3f, -9.1f), 0), Quaternion.identity);
+            Instantiate(wallPrefab, new Vector3(3.2f, UnityEngine.Random.Range(-2.3f, -9.1f), 0), Quaternion.identity);
             startGame = true;
         }
 
@@ -140,7 +143,7 @@ public class GameLoop : MonoBehaviour
         //if we're alive, spawn walls and move things
         if (GlobalVars.isDead == false && GlobalVars.gameState == 1)
         {
-            timeBetweenSpawn = Random.Range(0.05f, 15.2f);
+            timeBetweenSpawn = UnityEngine.Random.Range(0.05f, 15.2f);
             elapsedTime += Time.deltaTime;
 
             if(elapsedTime > timeBetweenSpawn)
@@ -190,13 +193,54 @@ public class GameLoop : MonoBehaviour
 
     private void RequestBanner()
     {
-        
-        string adUnitId = "ca-app-pub-3940256099942544/6300978111";
+        this.bannerView = new BannerView(bannerAdId, AdSize.SmartBanner, AdPosition.Bottom);
 
-        // Create a 320x50 banner at the top of the screen.
-        this.bannerView = new BannerView(adUnitId, AdSize.Banner, AdPosition.Bottom);
+        // Called when an ad request has successfully loaded.
+        this.bannerView.OnAdLoaded += this.HandleOnAdLoaded;
+        // Called when an ad request failed to load.
+        this.bannerView.OnAdFailedToLoad += this.HandleOnAdFailedToLoad;
+        // Called when an ad is clicked.
+        this.bannerView.OnAdOpening += this.HandleOnAdOpened;
+        // Called when the user returned from the app after an ad click.
+        this.bannerView.OnAdClosed += this.HandleOnAdClosed;
+        // Called when the ad click caused the user to leave the application.
+        this.bannerView.OnAdLeavingApplication += this.HandleOnAdLeavingApplication;
 
-        
+    }
+
+    private void ShowAd()
+    {
+        AdRequest request = new AdRequest.Builder().Build();
+
+        // Load the banner with the request.
+        this.bannerView.LoadAd(request);
+        adLoaded = true;
+    }
+
+    public void HandleOnAdLoaded(object sender, EventArgs args)
+    {
+        MonoBehaviour.print("HandleAdLoaded event received");
+    }
+
+    public void HandleOnAdFailedToLoad(object sender, AdFailedToLoadEventArgs args)
+    {
+        MonoBehaviour.print("HandleFailedToReceiveAd event received with message: "
+                            + args.Message);
+    }
+
+    public void HandleOnAdOpened(object sender, EventArgs args)
+    {
+        MonoBehaviour.print("HandleAdOpened event received");
+    }
+
+    public void HandleOnAdClosed(object sender, EventArgs args)
+    {
+        MonoBehaviour.print("HandleAdClosed event received");
+    }
+
+    public void HandleOnAdLeavingApplication(object sender, EventArgs args)
+    {
+        MonoBehaviour.print("HandleAdLeavingApplication event received");
     }
 
     void playerDies()
@@ -204,6 +248,11 @@ public class GameLoop : MonoBehaviour
         //display retry and exit buttons
         btnExit.SetActive(true);
         btnRetry.SetActive(true);
+        if(adLoaded == false)
+        {
+            ShowAd();
+            adLoaded = true;
+        }
     }
 
     void spawnWalls() {
@@ -212,12 +261,12 @@ public class GameLoop : MonoBehaviour
         //Debug.Log(spawnChance);
         if(wallCount > 5)
         {
-            tempObject = Instantiate(platfPrefab, new Vector3(5.1f, Random.Range(-1.64f, -0.64f), -1.4f), Quaternion.identity);
+            tempObject = Instantiate(platfPrefab, new Vector3(5.1f, UnityEngine.Random.Range(-1.64f, -0.64f), -1.4f), Quaternion.identity);
             wallCount = 0;
         }
         else
         {
-            tempObject = Instantiate(wallPrefab, new Vector3(3.2f, Random.Range(-2.3f, -1.1f), 0), Quaternion.identity);
+            tempObject = Instantiate(wallPrefab, new Vector3(3.2f, UnityEngine.Random.Range(-2.3f, -1.1f), 0), Quaternion.identity);
 
             if (tempObject.transform.position.y <= -1.9f)
             {
@@ -247,7 +296,7 @@ public class GameLoop : MonoBehaviour
 
         if(wallCount%3 == 0)
         {
-            int temprand = Random.Range(0, 3);
+            int temprand = UnityEngine.Random.Range(0, 3);
             if (temprand <= 1)
             {
                 Instantiate(tree1, new Vector3(5.1f, -1.1f, 0.5f), Quaternion.identity);
@@ -296,18 +345,6 @@ public class GameLoop : MonoBehaviour
         else if (GlobalVars.gameState == 2 && GlobalVars.isDead == true)
         {
             //this is when we would see the RETRY or EXIT buttons in game
-
-            //Should we load an ad?
-            if(adLoaded == false)
-            {
-                //Let's load an ad
-                // Create an empty ad request.
-                AdRequest request = new AdRequest.Builder().Build();
-
-                // Load the banner with the request.
-                this.bannerView.LoadAd(request);
-                adLoaded = true;
-            }
             
 
             if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended)
@@ -322,7 +359,6 @@ public class GameLoop : MonoBehaviour
                     Debug.Log("death222");
                     //We should have hit something with a 2D Physics collider!
                     GameObject touchedObject = hitInformation.transform.gameObject;
-                    adLoaded = false;
                     if (touchedObject.name == "btnRetry")
                     {
                         Debug.Log("retry touch");
@@ -356,7 +392,6 @@ public class GameLoop : MonoBehaviour
                     else if (touchedObject.name == "btnExit")
                     {
                         Debug.Log("exit touch");
-                        bannerView.Destroy();
                         //Delete walls, move background/foreground/jumpguy back to initial positions
                         foreach (GameObject o in GameObject.FindGameObjectsWithTag("Wall"))
                         {
@@ -485,7 +520,7 @@ public class GameLoop : MonoBehaviour
                         Destroy(o);
                     }
                     Destroy(jgClone);
-                    bannerView.Destroy();
+                    this.bannerView.Destroy();
                     this.RequestBanner();
                     adLoaded = false;
                     startGame = false;
@@ -525,9 +560,10 @@ public class GameLoop : MonoBehaviour
                         Destroy(o);
                     }
                     Destroy(jgClone);
-                    bannerView.Destroy();
-                    adLoaded = false;
                     startGame = false;
+                    this.bannerView.Destroy();
+                    this.RequestBanner();
+                    adLoaded = false;
                     btnExit.SetActive(false);
                     btnRetry.SetActive(false);
 

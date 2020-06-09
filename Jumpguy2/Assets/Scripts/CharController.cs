@@ -94,7 +94,7 @@ public class CharController : MonoBehaviour
             if ((collision.gameObject.transform.position.y +
                 (collision.gameObject.GetComponent<Collider2D>().bounds.size.y / 2)) > transform.position.y)
             {
-                StartCoroutine(shake.Shake(0.05f, 0.2f));
+                StartCoroutine(shake.Shake(0.15f, 0.2f));
                 /*
                 FIXED COLLISION: transform.position.y < (collision.gameObject.transform.position.y + 1.4f               
                 Debug.Log("ColliderPOS is: " + collision.gameObject.transform.position.y);
@@ -108,11 +108,11 @@ public class CharController : MonoBehaviour
         }
         else if (collision.gameObject.tag == "pform")
         {
-            if (-(collision.gameObject.GetComponent<Collider2D>().bounds.size.y / 2) > transform.position.y)
+            if (-(collision.gameObject.GetComponent<Collider2D>().bounds.size.y / 1.5) > transform.position.y)
             {
                 StartCoroutine(shake.Shake(0.15f, 0.2f));
 
-                Debug.Log("C: "+ -(collision.gameObject.GetComponent<Collider2D>().bounds.size.y / 2) + " - P: "+ transform.position.y);
+                Debug.Log("C: "+ -(collision.gameObject.GetComponent<Collider2D>().bounds.size.y / 1.5) + " - P: "+ transform.position.y);
                 GlobalVars.isDead = true;
             }
         }
