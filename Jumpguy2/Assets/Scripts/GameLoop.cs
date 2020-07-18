@@ -170,10 +170,10 @@ public class GameLoop : MonoBehaviour
             Sky.text = "HIGH SCORE: " + GlobalVars.highScore;
         } else if (GlobalVars.gameState == 2)
         {
-            //Sky.enabled = true;
-            SkyHigh.enabled = true;
+            Sky.enabled = true;
+            //SkyHigh.enabled = true;
             //Sky.text = "Score: " + GlobalVars.localScore;
-            SkyHigh.text = "HIGH SCORE: " + GlobalVars.highScore;
+            Sky.text = "HIGH SCORE: " + GlobalVars.highScore;
         } else if (GlobalVars.gameState == 3)
         {
             ErrorText.enabled = false;

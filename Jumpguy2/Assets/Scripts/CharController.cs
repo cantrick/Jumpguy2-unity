@@ -9,17 +9,20 @@ public class CharController : MonoBehaviour
     public ShakeBehavior shake;
 
     private int jumps = 0;
+    private Animator animator;
     Vector2 mousePos2D;
 
     // Start is called before the first frame update
     void Start()
     {
         shake = GameObject.FindGameObjectWithTag("Shake").GetComponent<ShakeBehavior>();
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        animator.SetBool("isDead",GlobalVars.isDead);
         if (GlobalVars.isDead == false)
         {
             //Start moving back to initial position if moved
@@ -48,6 +51,7 @@ public class CharController : MonoBehaviour
             //add force to jump!
             if (Input.GetMouseButtonDown(0) && jumps < 3)
             {
+                animator.SetBool("isJump", true);
                 StartCoroutine(shake.Shake(0.03f, 0.02f));
                 Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 mousePos2D = new Vector2(mousePos.x, mousePos.y);
@@ -84,6 +88,7 @@ public class CharController : MonoBehaviour
         if (collision.gameObject.tag == "Scenery" || collision.gameObject.tag == "Wall" || collision.gameObject.tag == "pform")
         {
             jumps = 0;
+            animator.SetBool("isJump", false);
         }
 
         //Debug.Log(transform.position.y + " : " + collision.gameObject.transform.position.y);
