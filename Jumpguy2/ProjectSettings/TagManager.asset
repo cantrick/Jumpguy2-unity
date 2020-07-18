@@ -12,6 +12,8 @@ TagManager:
   - pform
   - tree
   - Shake
+  - Cloud
+  - bg1
   layers:
   - Default
   - TransparentFX

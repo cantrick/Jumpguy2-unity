@@ -54,7 +54,23 @@ public class WallMove : MonoBehaviour
                     hasScored = true;
                 }
             }
-            else
+            else if (wallPrefab.CompareTag("Cloud"))
+            {
+                horizontal = new Vector3(speed + (float)(GlobalVars.localScore / 19.0f), 0, 0);
+                transform.position = transform.position - (horizontal * Time.deltaTime);
+
+                if (transform.position.x < -6.2f)
+                {
+                    Destroy(this.gameObject);
+                }
+
+                if (!hasScored && transform.position.x < -1.5f)
+                {
+                    GlobalVars.localScore++;
+                    hasScored = true;
+                }
+            }
+            else if (wallPrefab.CompareTag("Wall"))
             {
                 horizontal = new Vector3(speed + (float)(GlobalVars.localScore / 19.0f), 0, 0);
                 transform.position = transform.position - (horizontal * Time.deltaTime);

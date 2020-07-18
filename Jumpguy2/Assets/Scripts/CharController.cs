@@ -108,7 +108,8 @@ public class CharController : MonoBehaviour
         }
         else if (collision.gameObject.tag == "pform")
         {
-            if (-(collision.gameObject.GetComponent<Collider2D>().bounds.size.y / 1.5) > transform.position.y)
+            Debug.Log("C: " + -(collision.gameObject.GetComponent<Collider2D>().bounds.size.y / 2) + " - P: " + transform.position.y);
+            if (-(collision.gameObject.GetComponent<Collider2D>().bounds.size.y / 2) > transform.position.y)
             {
                 StartCoroutine(shake.Shake(0.15f, 0.2f));
 

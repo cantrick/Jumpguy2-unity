@@ -41,7 +41,7 @@ public class scoreDisplay : MonoBehaviour
                 ItemDetails itemDetails = SpawnedItem.GetComponent<ItemDetails>();
 
                 //set name
-                itemDetails.text.color = Color.white;
+                itemDetails.text.color = Color.black;
                 itemDetails.text.text = GlobalVars.scoreResults[i];
 
                 //score = GameObject.Find(("Text"+(i+1)));

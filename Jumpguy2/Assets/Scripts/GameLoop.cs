@@ -16,6 +16,7 @@ public class GameLoop : MonoBehaviour
     public Text ErrorText;
     public GameObject tree1;
     public GameObject tree2;
+    public GameObject pCloud;
 
 
     Vector3 touchPosWorld;
@@ -78,7 +79,7 @@ public class GameLoop : MonoBehaviour
 
 
         elapsedTime = 0.0f;
-        Sky.color = Color.white;
+        Sky.color = Color.black;
 
         //get highscore from file
         //PlayerPrefs.SetInt("highscore", 0);
@@ -176,9 +177,9 @@ public class GameLoop : MonoBehaviour
         } else if (GlobalVars.gameState == 3)
         {
             ErrorText.enabled = false;
-            Sky.enabled = true;
-            SkyHigh.enabled = false;
-            Sky.text = "Global Highscores";
+            SkyHigh.enabled = true;
+            Sky.enabled = false;
+            SkyHigh.text = "Global Highscores";
 
         }
 
@@ -261,14 +262,14 @@ public class GameLoop : MonoBehaviour
         //Debug.Log(spawnChance);
         if(wallCount > 5)
         {
-            tempObject = Instantiate(platfPrefab, new Vector3(5.1f, UnityEngine.Random.Range(-1.64f, -0.64f), -1.4f), Quaternion.identity);
+            tempObject = Instantiate(platfPrefab, new Vector3(5.1f, UnityEngine.Random.Range(-3.47f, -2.0f), 0), Quaternion.identity);
             wallCount = 0;
         }
         else
         {
-            tempObject = Instantiate(wallPrefab, new Vector3(3.2f, UnityEngine.Random.Range(-2.3f, -1.1f), 0), Quaternion.identity);
+            tempObject = Instantiate(wallPrefab, new Vector3(3.2f, UnityEngine.Random.Range(-3f, -1.18f), 0), Quaternion.identity);
 
-            if (tempObject.transform.position.y <= -1.9f)
+            if (tempObject.transform.position.y <= -2.3f)
             {
                 sRenderers = tempObject.GetComponentsInChildren<SpriteRenderer>();
                 foreach (SpriteRenderer sprite in sRenderers)
@@ -276,7 +277,7 @@ public class GameLoop : MonoBehaviour
                     sprite.color = Color.green;
                 }
             }
-            else if (tempObject.transform.position.y > -1.5f)
+            else if (tempObject.transform.position.y > -1.52f)
             {
                 sRenderers = tempObject.GetComponentsInChildren<SpriteRenderer>();
                 foreach (SpriteRenderer sprite in sRenderers)
@@ -299,14 +300,18 @@ public class GameLoop : MonoBehaviour
             int temprand = UnityEngine.Random.Range(0, 3);
             if (temprand <= 1)
             {
-                Instantiate(tree1, new Vector3(5.1f, -1.1f, 0.5f), Quaternion.identity);
+                Instantiate(tree1, new Vector3(5.1f, -0.1f, 0.5f), Quaternion.identity);
 
             }
             else
             {
-                Instantiate(tree2, new Vector3(5.1f, -0.693f, 0.5f), Quaternion.identity);
+                Instantiate(tree2, new Vector3(5.1f, 0.66f, 0.5f), Quaternion.identity);
 
             }
+        }
+        else if(wallCount%4 == 0)
+        {
+            Instantiate(pCloud, new Vector3(6.17f, UnityEngine.Random.Range(0.9f, 5.05f), 2.0f), Quaternion.identity);
         }
 
 
