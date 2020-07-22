@@ -1,16 +1,16 @@
 ﻿<Properties StartupConfiguration="{11F1D67C-99A5-DA3C-A1BC-9EB717E2353E}|">
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/GameLoop.cs">
     <Files>
-      <File FileName="Assets/Scripts/GameLoop.cs" Line="176" Column="16" IsPinned="True" />
+      <File FileName="Assets/Scripts/GameLoop.cs" Line="197" Column="10" IsPinned="True" />
+      <File FileName="Assets/Scripts/web calls/addUserScript.cs" Line="1" Column="1" IsPinned="True" />
       <File FileName="Assets/Scripts/GlobalVars.cs" />
       <File FileName="Assets/Scripts/WallMove.cs" />
       <File FileName="Assets/Scripts/BackgroundMove.cs" />
       <File FileName="Assets/Scripts/ForegroundMove.cs" />
       <File FileName="Assets/Scripts/scoreDisplay.cs" />
       <File FileName="Assets/Scripts/web calls/HSController.cs" />
-      <File FileName="Assets/Scripts/web calls/addUserScript.cs" />
-      <File FileName="Assets/Scripts/InputName.cs" />
-      <File FileName="Assets/Scripts/CharController.cs" Line="27" Column="10" />
+      <File FileName="Assets/Scripts/InputName.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/CharController.cs" />
       <File FileName="Assets/Scripts/ShakeBehavior.cs" />
     </Files>
     <Pads>

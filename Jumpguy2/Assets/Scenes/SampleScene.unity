@@ -1312,6 +1312,7 @@ GameObject:
   - component: {fileID: 619964155}
   - component: {fileID: 619964154}
   - component: {fileID: 619964157}
+  - component: {fileID: 619964158}
   m_Layer: 0
   m_Name: btnScores
   m_TagString: Untagged
@@ -1424,6 +1425,25 @@ MonoBehaviour:
   SpawnPoint: {fileID: 1774690833}
   content: {fileID: 57737137}
   item: {fileID: 5678999598461930201, guid: cfe6f79967de6224e8a8dc9a9d25d0a0, type: 3}
+--- !u!95 &619964158
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 619964153}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 3c4f28f18e6624f79a1aa53bcb57316d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &625872220
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1553,6 +1573,7 @@ GameObject:
   - component: {fileID: 649603838}
   - component: {fileID: 649603837}
   - component: {fileID: 649603839}
+  - component: {fileID: 649603840}
   m_Layer: 0
   m_Name: btnPlay
   m_TagString: Untagged
@@ -1677,6 +1698,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ErrorText: {fileID: 390191942}
+--- !u!95 &649603840
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 649603834}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 2b585934d005a42e0bfd63b7268e7a4b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &668895846
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2297,6 +2337,7 @@ GameObject:
   - component: {fileID: 1245748465}
   - component: {fileID: 1245748464}
   - component: {fileID: 1245748463}
+  - component: {fileID: 1245748466}
   m_Layer: 0
   m_Name: btnRetry
   m_TagString: Untagged
@@ -2394,6 +2435,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &1245748466
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1245748462}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b713f9190fe7b4f5a8c9af51a318ddc4, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1396939723
 GameObject:
   m_ObjectHideFlags: 0
@@ -2588,6 +2648,10 @@ MonoBehaviour:
   tree1: {fileID: 418360190057371984, guid: a918dec7279544f0c8c597d4b357aba6, type: 3}
   tree2: {fileID: 6876456892727442057, guid: a3bcaf69236794a9ba30797cd029cdfe, type: 3}
   pCloud: {fileID: 6623157166687782683, guid: d57d3164a7ddd4b93ab0558a4bfccddd, type: 3}
+  playAnimator: {fileID: 649603840}
+  exitAnimator: {fileID: 0}
+  retryAnimator: {fileID: 1245748466}
+  scoresAnimator: {fileID: 619964158}
   lNum: {fileID: 2921914548687432536, guid: adbf9d21924274a2bb5c8c12af9fffb2, type: 3}
   sRenderers: []
   timeBetweenSpawn: 0

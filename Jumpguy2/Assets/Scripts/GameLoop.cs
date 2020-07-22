@@ -29,6 +29,12 @@ public class GameLoop : MonoBehaviour
     GameObject ipf;
     GameObject scoreCanvas;
     GameObject spawnPoint;
+    public Animator playAnimator;
+    public Animator exitAnimator;
+    public Animator retryAnimator;
+    public Animator scoresAnimator;
+    //public Animator scoreAnimator;
+    //public Animator retryAnimator;
     public GameObject lNum;
     private int wallCount;
     //private string deviceid;
@@ -212,7 +218,6 @@ public class GameLoop : MonoBehaviour
     private void ShowAd()
     {
         AdRequest request = new AdRequest.Builder().Build();
-
         // Load the banner with the request.
         this.bannerView.LoadAd(request);
         adLoaded = true;
@@ -339,12 +344,19 @@ public class GameLoop : MonoBehaviour
                     if (touchedObject.name == "btnPlay")
                     {
                         Debug.Log("PLAY");
+                        playAnimator.SetBool("pushPlay", true);
                         if (PlayerPrefs.HasKey("userName"))
                         {
                             GlobalVars.gameState = 1;
                         }
+                    } else
+                    {
+                        //playAnimator.SetBool("pushPlay", false);
                     }
                 }
+            } else if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+            {
+
             }
         }
         else if (GlobalVars.gameState == 2 && GlobalVars.isDead == true)
@@ -488,9 +500,41 @@ public class GameLoop : MonoBehaviour
 
     void debugButtonFunction()
     {
+        //Handle button animations:
+        if (Input.GetMouseButtonDown(0))
+        {
+            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector2 mousePos2D = new Vector2(mousePos.x, mousePos.y);
+
+            RaycastHit2D hit = Physics2D.Raycast(mousePos2D, Vector2.zero);
+            if (hit.collider != null)
+            {
+                if (hit.collider.gameObject.name == "btnPlay")
+                {
+                    playAnimator.SetBool("pushPlay", true);
+                }
+                else if (hit.collider.gameObject.name == "btnRetry")
+                {
+                    retryAnimator.SetBool("pressRetry", true);
+                }
+                else if (hit.collider.gameObject.name == "btnExit")
+                {
+                    //exitAnimator.SetBool("pushExit", true);
+                }
+                else if (hit.collider.gameObject.name == "btnScores")
+                {
+                    scoresAnimator.SetBool("pushScores", true);
+                }
+            }
+        }
+
         //if we click the mouse button
         if (Input.GetMouseButtonUp(0))
         {
+            playAnimator.SetBool("pushPlay", false);
+            retryAnimator.SetBool("pressRetry", false);
+            //exitAnimator.SetBool("pushExit", false);
+            scoresAnimator.SetBool("pushScores", false);
 
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector2 mousePos2D = new Vector2(mousePos.x, mousePos.y);
