@@ -13,6 +13,7 @@ public class GameLoop : MonoBehaviour
     public GameObject platfPrefab;
     public Text Sky;
     public Text SkyHigh;
+    public Text gpText;
     public Text ErrorText;
     public GameObject tree1;
     public GameObject tree2;
@@ -166,25 +167,30 @@ public class GameLoop : MonoBehaviour
         if (GlobalVars.gameState == 1)
         {
             Sky.enabled = false;
+            gpText.enabled = false;
             SkyHigh.enabled = false;
             //Sky.text = "Score: " + GlobalVars.localScore;
         }
         else if (GlobalVars.gameState == 0)
         {
             Sky.enabled = true;
+            gpText.enabled = false;
             SkyHigh.enabled = false;
             Sky.text = "HIGH SCORE: " + GlobalVars.highScore;
         } else if (GlobalVars.gameState == 2)
         {
             Sky.enabled = true;
+            gpText.enabled = false;
             //SkyHigh.enabled = true;
             //Sky.text = "Score: " + GlobalVars.localScore;
             Sky.text = "HIGH SCORE: " + GlobalVars.highScore;
         } else if (GlobalVars.gameState == 3)
         {
+            gpText.enabled = true;
             ErrorText.enabled = false;
             SkyHigh.enabled = true;
             Sky.enabled = false;
+            gpText.text = "Your current position: " + GlobalVars.globalPos;
             SkyHigh.text = "Global Highscores";
 
         }
