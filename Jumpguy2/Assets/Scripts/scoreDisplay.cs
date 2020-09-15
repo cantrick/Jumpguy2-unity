@@ -55,7 +55,7 @@ public class scoreDisplay : MonoBehaviour
                 //Find your name/score/place:
                 foreach(string s in GlobalVars.scoreResults[i].Split('\t')) {
                     if(s.Equals(PlayerPrefs.GetString("userName"))) {
-                        GlobalVars.globalPos = i;
+                        GlobalVars.globalPos = i+1;
                     }
                 }
                 //score = GameObject.Find(("Text"+(i+1)));
