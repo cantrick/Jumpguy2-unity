@@ -13,6 +13,8 @@ public class GlobalVars : MonoBehaviour
     public static bool keysDeleted = false;
     public static int userID;
     public static string[] scoreResults;
+    public static int globalPos;
+    
     // Start is called before the first frame update
     void Start()
     {

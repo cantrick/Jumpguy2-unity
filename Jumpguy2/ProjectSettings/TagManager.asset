@@ -7,6 +7,13 @@ TagManager:
   - Scenery
   - Wall
   - Jumpguy
+  - Score
+  - bg2
+  - pform
+  - tree
+  - Shake
+  - Cloud
+  - bg1
   layers:
   - Default
   - TransparentFX

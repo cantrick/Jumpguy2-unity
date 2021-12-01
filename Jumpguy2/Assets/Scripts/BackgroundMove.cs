@@ -9,6 +9,8 @@ public class BackgroundMove : MonoBehaviour
     public GameObject bgPrefab;
 
     bool bgSpawn = true;
+    bool bg2Spawn = true;
+    private float bgRand = 0;
 
 
 
@@ -23,19 +25,41 @@ public class BackgroundMove : MonoBehaviour
     {
         if (GlobalVars.isDead == false && GlobalVars.gameState == 1)
         {
-            horizontal = new Vector3(speed + (float)(GlobalVars.localScore / 19.0f), 0, 0);
-            transform.position = transform.position - (horizontal * Time.deltaTime);
+            if(this.tag == "bg2")
+            {
+                //bgRand = Random.Range(0f,0.36f);
+                horizontal = new Vector3(speed + (float)(GlobalVars.localScore / 19.0f), 0, 0);
+                transform.position = transform.position - (horizontal * Time.deltaTime);
 
-            //spawn background
-            if ((transform.position.x < -2.3f) && bgSpawn == true)
-            {
-                Instantiate(bgPrefab, new Vector3(7.85f, 0, 2), Quaternion.identity);
-                bgSpawn = false;
+                //spawn background
+                if ((transform.position.x < -6.6f) && bg2Spawn == true)
+                {
+                    Instantiate(bgPrefab, new Vector3(12.55f, 0.3f, 1), Quaternion.identity);
+                    bg2Spawn = false;
+                }
+                else if (transform.position.x < -13.0f)
+                {
+                    Destroy(this.gameObject);
+                }
             }
-            else if (transform.position.x < -7.93f)
+            else if(this.tag == "bg1" || this.tag == "Cloud" || this.tag == "tree")
             {
-                Destroy(this.gameObject);
+                bgRand = Random.Range(0.24f, 0.69f);
+                horizontal = new Vector3(speed + (float)(GlobalVars.localScore / 19.0f), 0, 0);
+                transform.position = transform.position - (horizontal * Time.deltaTime);
+
+                //spawn background
+                if ((transform.position.x < -2.91f) && bgSpawn == true)
+                {
+                    Instantiate(bgPrefab, new Vector3(13.14f, bgRand, 2), Quaternion.identity);
+                    bgSpawn = false;
+                }
+                else if (transform.position.x < -13.03f)
+                {
+                    Destroy(this.gameObject);
+                }
             }
+            
         }
     }
 }

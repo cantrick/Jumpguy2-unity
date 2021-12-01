@@ -27,6 +27,7 @@ public class scoreDisplay : MonoBehaviour
     {
         if (GlobalVars.gameState == 3 && getScore == false)
         {
+            
             for (int i = 0;i< GlobalVars.scoreResults.Length; i++)
             {
                 // 60 width of item
@@ -41,8 +42,22 @@ public class scoreDisplay : MonoBehaviour
                 ItemDetails itemDetails = SpawnedItem.GetComponent<ItemDetails>();
 
                 //set name
+                if(GlobalVars.scoreResults[i].Contains(PlayerPrefs.GetString("userName"))) {
+                    itemDetails.text.color = Color.white;
+
+                } else {
+                    itemDetails.text.color = Color.black;
+
+                }
                 itemDetails.text.text = GlobalVars.scoreResults[i];
 
+
+                //Find your name/score/place:
+                foreach(string s in GlobalVars.scoreResults[i].Split('\t')) {
+                    if(s.Equals(PlayerPrefs.GetString("userName"))) {
+                        GlobalVars.globalPos = i+1;
+                    }
+                }
                 //score = GameObject.Find(("Text"+(i+1)));
 
                 //score.GetComponent<Text>().text = GlobalVars.scoreResults[i];

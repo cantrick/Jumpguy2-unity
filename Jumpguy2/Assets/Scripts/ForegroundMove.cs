@@ -27,12 +27,12 @@ public class ForegroundMove : MonoBehaviour
             transform.position = transform.position - (horizontal * Time.deltaTime);
 
             //spawn background
-            if ((transform.position.x < -2.2f) && fgSpawn == true)
+            if ((transform.position.x < -11.0f) && fgSpawn == true)
             {
-                Instantiate(fgPrefab, new Vector3(7.85f, -0.3f, -1.0f), Quaternion.identity);
+                Instantiate(fgPrefab, new Vector3(17.26f, 0.8f, -1.0f), Quaternion.identity);
                 fgSpawn = false;
             }
-            else if (transform.position.x < -7.93f)
+            else if (transform.position.x < -17f)
             {
                 Destroy(this.gameObject);
             }
